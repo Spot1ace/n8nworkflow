@@ -1,0 +1,410 @@
+{
+  "name": "Bible Verse Look-Up",
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        520,
+        60
+      ],
+      "id": "cb0c5997-6470-4e9b-911f-f5a053926e62",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "sM2orlgvsDOMLWcx",
+          "name": "OpenAi account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "Bible Verse Look-Up",
+        "formDescription": "Input a Citation of a Bible Verse and it will email it to you.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Your Email Address",
+              "placeholder": "example123@gmail.com",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Name of Book",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Genesis"
+                  },
+                  {
+                    "option": "Exodus"
+                  },
+                  {
+                    "option": "Leviticus"
+                  },
+                  {
+                    "option": "Numbers"
+                  },
+                  {
+                    "option": "Deuteronomy"
+                  },
+                  {
+                    "option": "Joshua"
+                  },
+                  {
+                    "option": "Judges"
+                  },
+                  {
+                    "option": "Ruth"
+                  },
+                  {
+                    "option": "1 Samuel"
+                  },
+                  {
+                    "option": "2 Samuel"
+                  },
+                  {
+                    "option": "1 Kings"
+                  },
+                  {
+                    "option": "2 Kings"
+                  },
+                  {
+                    "option": "1 Chronicles"
+                  },
+                  {
+                    "option": "2 Chronicles"
+                  },
+                  {
+                    "option": "Ezra"
+                  },
+                  {
+                    "option": "Nehemiah"
+                  },
+                  {
+                    "option": "Esther"
+                  },
+                  {
+                    "option": "Job"
+                  },
+                  {
+                    "option": "Psalms"
+                  },
+                  {
+                    "option": "Proverbs"
+                  },
+                  {
+                    "option": "Ecclesiastes"
+                  },
+                  {
+                    "option": "Song of Solomon"
+                  },
+                  {
+                    "option": "Isaiah"
+                  },
+                  {
+                    "option": "Jeremiah"
+                  },
+                  {
+                    "option": "Lamentations"
+                  },
+                  {
+                    "option": "Ezekiel"
+                  },
+                  {
+                    "option": "Daniel"
+                  },
+                  {
+                    "option": "Hosea"
+                  },
+                  {
+                    "option": "Joel"
+                  },
+                  {
+                    "option": "Amos"
+                  },
+                  {
+                    "option": "Obediah"
+                  },
+                  {
+                    "option": "Jonah"
+                  },
+                  {
+                    "option": "Micah"
+                  },
+                  {
+                    "option": "Nahum"
+                  },
+                  {
+                    "option": "Habakkuk"
+                  },
+                  {
+                    "option": "Zephaniah"
+                  },
+                  {
+                    "option": "Haggai"
+                  },
+                  {
+                    "option": "Zecheriah"
+                  },
+                  {
+                    "option": "Malachi"
+                  },
+                  {
+                    "option": "Matthew"
+                  },
+                  {
+                    "option": "Mark"
+                  },
+                  {
+                    "option": "Luke"
+                  },
+                  {
+                    "option": "John"
+                  },
+                  {
+                    "option": "Acts"
+                  },
+                  {
+                    "option": "Romans"
+                  },
+                  {
+                    "option": "1 Corinthians"
+                  },
+                  {
+                    "option": "2 Corinthians"
+                  },
+                  {
+                    "option": "Galatians"
+                  },
+                  {
+                    "option": "Ephesians"
+                  },
+                  {
+                    "option": "Philippians"
+                  },
+                  {
+                    "option": "Colossians"
+                  },
+                  {
+                    "option": "1 Thessalonians"
+                  },
+                  {
+                    "option": "2 Thessalonians"
+                  },
+                  {
+                    "option": "1 Timothy"
+                  },
+                  {
+                    "option": "2 Timothy"
+                  },
+                  {
+                    "option": "Titus"
+                  },
+                  {
+                    "option": "Philemon"
+                  },
+                  {
+                    "option": "Hebrews"
+                  },
+                  {
+                    "option": "James"
+                  },
+                  {
+                    "option": "1 Peter"
+                  },
+                  {
+                    "option": "2 Peter"
+                  },
+                  {
+                    "option": "1 John"
+                  },
+                  {
+                    "option": "2 John"
+                  },
+                  {
+                    "option": "3 John"
+                  },
+                  {
+                    "option": "Jude"
+                  },
+                  {
+                    "option": "Revelation"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Chapter Number",
+              "fieldType": "number",
+              "placeholder": "ex: 1, 2",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Verse Number",
+              "fieldType": "number",
+              "placeholder": "you are only able to choose one verse for now due to quota limits",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Version",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "English Standard Version"
+                  },
+                  {
+                    "option": "King James Version"
+                  },
+                  {
+                    "option": "New King James Version"
+                  },
+                  {
+                    "option": "New International Version"
+                  },
+                  {
+                    "option": "New American Standard Version"
+                  },
+                  {
+                    "option": "New Living Translation"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        -100
+      ],
+      "id": "92316236-e3e1-472d-bb1a-f89d71c0c53e",
+      "name": "On form submission",
+      "webhookId": "dbc73e94-2415-43f8-b216-d242791c7b50",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all().map((item) => item.json);\nconst chatImput = items.map(\n  (item) =>\n    `${item[\"Name of Book\"]} ${item[\"Chapter Number\"]}:${item[\"Verse Number\"]} in the ${item[\"Version\"]}`,\n);\nreturn { chatImput };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        360,
+        -100
+      ],
+      "id": "35984fd4-3645-4dc6-bfed-3e042df8c4df",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Can you please tell me specifically what {{ $json.chatImput[0] }} says and nothing else? If the chapter is beyond the limits of the book please use the last chapter and indicate it by saying \"The chapter you entered was too large. The last chapter of the book was used.\" If the verse is beyond the limits of the chapter please use the last verse and indicate it by saying \"The verse you entered was too large. The last verse of the chapter was used.\" ",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        500,
+        -100
+      ],
+      "id": "74404b5c-13e9-4280-a979-8634d6b0211c",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').item.json['Your Email Address'] }}",
+        "subject": "Your Bible Verse",
+        "message": "={{$json[\"output\"]}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        800,
+        -100
+      ],
+      "id": "4cb294d0-f7f1-4636-a774-d5e0d5dc0dea",
+      "name": "Gmail",
+      "webhookId": "8e1ee60c-b5c7-48fe-9010-5053695ec697",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "6D1NrfYtvKXRdCaO",
+          "name": "Gmail account 5"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b6f7c32a-0f32-4f32-808b-996d86307221",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f318f1eeb582bef69a56797ad1f28184a54cfe51b0e461ee190c5740946ea07e"
+  },
+  "id": "BIzp0OitOfWuCkcU",
+  "tags": []
+}
