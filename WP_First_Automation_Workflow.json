@@ -178,7 +178,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        1256,
+        1696,
         220
       ],
       "id": "e53ab16a-e166-4711-82e7-9ec82b794d06",
@@ -193,7 +193,7 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        1036,
+        1476,
         220
       ],
       "id": "f63882b1-581d-4430-92a7-9c7973d5b522",
@@ -207,7 +207,7 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        1476,
+        1916,
         220
       ],
       "id": "ebd09247-b154-4aca-85fd-fb96a675a0c2",
@@ -223,7 +223,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        1696,
+        2136,
         220
       ],
       "id": "78cde657-6029-46b6-b9fa-2b5a51c608ee",
@@ -246,7 +246,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        2136,
+        2576,
         420
       ],
       "id": "a66d939e-b85a-4dc8-adf1-681569ab8abd",
@@ -276,7 +276,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2136,
+        2576,
         220
       ],
       "id": "68b66789-ca2f-410d-bfa5-02d0c345a89b",
@@ -290,7 +290,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        1916,
+        2356,
         220
       ],
       "id": "8f9d69c3-3293-4022-80b1-18ec1f71698c",
@@ -316,7 +316,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        2356,
+        2796,
         320
       ],
       "id": "41f615af-a897-4b21-8be6-d98414ef73d1",
@@ -347,7 +347,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        2732,
+        3172,
         320
       ],
       "id": "cf36a1d8-a1d3-407a-9d5d-bd70193dfdbe",
@@ -370,7 +370,7 @@
       "type": "n8n-nodes-base.wordpress",
       "typeVersion": 1,
       "position": [
-        3108,
+        3548,
         320
       ],
       "id": "86bad011-8408-4158-b393-3e83e31adeb7",
@@ -381,40 +381,6 @@
           "name": "Wordpress account 3"
         }
       }
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "1ea66e55-aade-4094-96b7-02598c247ea0",
-              "leftValue": "={{$binary.data.fileSize > 15728640}}",
-              "rightValue": "true",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        816,
-        320
-      ],
-      "id": "332a706d-08cf-4e90-bf5c-b495522aee2f",
-      "name": "File Size Check"
     },
     {
       "parameters": {
@@ -498,7 +464,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        3328,
+        3768,
         320
       ],
       "id": "726f7091-2992-4cbc-b7ac-c1e622d84920",
@@ -509,6 +475,88 @@
           "name": "Google Sheets account 4"
         }
       }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4de498df-d72d-4e43-a0ae-c59069f8719d",
+              "name": "fileSize",
+              "value": "={{ $binary.data.fileSize }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        320
+      ],
+      "id": "86f2c220-a552-4467-bfc5-0f1fbe5fbe9a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "68f3ddba-4b93-4ee8-a8a0-866eb9cf5abb",
+              "leftValue": "={{ $json.fileSizeNum }}",
+              "rightValue": 15,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1256,
+        320
+      ],
+      "id": "cf1fc3aa-511d-47a4-9455-63bf6ff19327",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b604048e-96de-4ced-8f52-557fc6e5580b",
+              "name": "fileSizeNum",
+              "value": "={{ parseFloat($json.fileSize.replace('MB', '').trim()) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1036,
+        320
+      ],
+      "id": "b74f8511-5295-4ad0-a221-09741d4d6290",
+      "name": "Edit Fields1"
     }
   ],
   "pinData": {},
@@ -550,7 +598,7 @@
       "main": [
         [
           {
-            "node": "File Size Check",
+            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
@@ -696,7 +744,29 @@
         ]
       ]
     },
-    "File Size Check": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
       "main": [
         [
           {
@@ -719,7 +789,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "b794d294-d55a-4405-b312-ff0f8576c00b",
+  "versionId": "7190245a-4b5e-41ee-8f27-d33380bceff4",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "404da7777b9ae3a6ef4a84e36ff3f6ed18ddf4e223c2dd8f9560a48938216fe2"
