@@ -28,8 +28,8 @@
           "name": "Will Hankins - basic auth WordPress"
         },
         "wordpressApi": {
-          "id": "jXcDbQpKPfOZ2RgN",
-          "name": "Will Hankins - Wordpress account"
+          "id": "and94ZObqAmSRoTQ",
+          "name": "Wordpress account 3"
         }
       }
     },
@@ -65,8 +65,8 @@
       "notesInFlow": false,
       "credentials": {
         "openAiApi": {
-          "id": "ji6eoyvABVDXeld1",
-          "name": "OpenAi 5mt"
+          "id": "oCIZ5iYhUW8PJ1Tj",
+          "name": "OpenAi account 2"
         }
       }
     },
@@ -88,8 +88,8 @@
       "notesInFlow": false,
       "credentials": {
         "openAiApi": {
-          "id": "ji6eoyvABVDXeld1",
-          "name": "OpenAi 5mt"
+          "id": "oCIZ5iYhUW8PJ1Tj",
+          "name": "OpenAi account 2"
         }
       }
     },
@@ -157,8 +157,8 @@
       "name": "Paragraph breaker",
       "credentials": {
         "openAiApi": {
-          "id": "ji6eoyvABVDXeld1",
-          "name": "OpenAi 5mt"
+          "id": "oCIZ5iYhUW8PJ1Tj",
+          "name": "OpenAi account 2"
         }
       }
     },
@@ -188,8 +188,8 @@
       "name": "Summary Creation",
       "credentials": {
         "openAiApi": {
-          "id": "ji6eoyvABVDXeld1",
-          "name": "OpenAi 5mt"
+          "id": "oCIZ5iYhUW8PJ1Tj",
+          "name": "OpenAi account 2"
         }
       }
     },
@@ -289,8 +289,8 @@
       "name": "Google Sheets",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "3OhMLCUd8n9HRcC7",
-          "name": "Will Hankins - Google OAuth"
+          "id": "qNB8rMVwDZlKxljU",
+          "name": "Google Sheets account 4"
         }
       }
     },
