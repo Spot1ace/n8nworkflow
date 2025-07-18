@@ -1,0 +1,587 @@
+{
+  "name": "OpenAI audio to text transcription",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "=https://willhankins2025.mystagingwebsite.com/wp-content/uploads/2025/07/20250601-Morning.mp3",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        920,
+        -800
+      ],
+      "id": "01d9d01a-ab54-48ce-9122-b4eff0670d55",
+      "name": "Convert audio link to file",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "jZginzHyXwnlX1lA",
+          "name": "Will Hankins - basic auth WordPress"
+        },
+        "wordpressApi": {
+          "id": "jXcDbQpKPfOZ2RgN",
+          "name": "Will Hankins - Wordpress account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fileSelector": "/tmp/output_*.mp3",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        -900
+      ],
+      "id": "3a5619a9-bdae-408d-9b8b-78c6938f9268",
+      "name": "Read Audio Files"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "binaryPropertyName": "=data",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2460,
+        -900
+      ],
+      "id": "472c88ef-acf4-42bd-92a6-20b77c9dc6b0",
+      "name": "Split Files Transcriber",
+      "notesInFlow": false,
+      "credentials": {
+        "openAiApi": {
+          "id": "ji6eoyvABVDXeld1",
+          "name": "OpenAi 5mt"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "binaryPropertyName": "=data",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2900,
+        -700
+      ],
+      "id": "630d6544-994d-479f-805f-0358315d3a82",
+      "name": "Transcriber",
+      "notesInFlow": false,
+      "credentials": {
+        "openAiApi": {
+          "id": "ji6eoyvABVDXeld1",
+          "name": "OpenAi 5mt"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "339bb3b6-7d8e-4da7-90d8-4cff30656d85",
+              "name": "text",
+              "value": "={{ $('Split Files Transcriber').item.json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2900,
+        -900
+      ],
+      "id": "a14f5685-2cc8-4407-b90f-43ed40bee021",
+      "name": "Combine Transcripts",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "command": "rm /tmp/output_*.mp3"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2680,
+        -900
+      ],
+      "id": "55c11084-d673-422e-a8f9-e8759117f61f",
+      "name": "Delete Files"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "GPT-3.5-TURBO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Please take this transcript and break it into paragraphs as you see fit. Reminder that a person spoke these, so incorporate that into your reasoning, but do not change the transcript at all except for adding the paragraph breaks. Please do not include any extra commentary, only the broken up transcript. This is very important.\n\n{{ $json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        3120,
+        -800
+      ],
+      "id": "934df9a6-b37f-46b3-a747-5788ee38365f",
+      "name": "Paragraph breaker",
+      "credentials": {
+        "openAiApi": {
+          "id": "ji6eoyvABVDXeld1",
+          "name": "OpenAi 5mt"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "id"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Create a few sentence summary of the following text that is bibically accurate without any extra commentary except the summary. Break the summary into paragraphs using HTML if needed.\n\n{{ $json.message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        3496,
+        -800
+      ],
+      "id": "8fc1d38a-14a6-4e25-85e5-35a6661e7192",
+      "name": "Summary Creation",
+      "credentials": {
+        "openAiApi": {
+          "id": "ji6eoyvABVDXeld1",
+          "name": "OpenAi 5mt"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        700,
+        -800
+      ],
+      "id": "05ecddad-f760-4046-8eca-466fe6e506e2",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1eBTTF3KlF-cJ28VS6ONdIzo22ezq4sf58h3gJYrea8s",
+          "mode": "list",
+          "cachedResultName": "Sermon Transcripts",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eBTTF3KlF-cJ28VS6ONdIzo22ezq4sf58h3gJYrea8s/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eBTTF3KlF-cJ28VS6ONdIzo22ezq4sf58h3gJYrea8s/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Summary": "={{ $json.message.content }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Summary",
+              "displayName": "Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Speaker",
+              "displayName": "Speaker",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Passage",
+              "displayName": "Passage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Transcript",
+              "displayName": "Transcript",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        3872,
+        -800
+      ],
+      "id": "b3112e68-cf93-4066-bc84-38d9e4b2038e",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "3OhMLCUd8n9HRcC7",
+          "name": "Will Hankins - Google OAuth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4de498df-d72d-4e43-a0ae-c59069f8719d",
+              "name": "fileSize",
+              "value": "={{ $binary.data.fileSize }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1140,
+        -800
+      ],
+      "id": "adf58155-eb05-4115-b6c8-a9317379455c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "68f3ddba-4b93-4ee8-a8a0-866eb9cf5abb",
+              "leftValue": "={{ $json.fileSizeNum }}",
+              "rightValue": 15,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1580,
+        -800
+      ],
+      "id": "22f43559-722c-413f-815b-71dc1ef98882",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b604048e-96de-4ced-8f52-557fc6e5580b",
+              "name": "fileSizeNum",
+              "value": "={{ parseFloat($json.fileSize.replace('MB', '').trim()) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1360,
+        -800
+      ],
+      "id": "fa317825-5fe5-40c7-87a2-6654d960d0f6",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/tmp/input.mp3",
+        "dataPropertyName": "=data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        -900
+      ],
+      "id": "84281217-a125-4c02-b685-b258153bef07",
+      "name": "Download audio"
+    },
+    {
+      "parameters": {
+        "command": "ffmpeg -i /tmp/input.mp3 -f segment -segment_time 900 -c copy /tmp/output_%03d.mp3"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        -900
+      ],
+      "id": "0faef66b-aba7-49e4-9622-83749d4a9152",
+      "name": "Split into 15 minute segments1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Convert audio link to file": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Audio Files": {
+      "main": [
+        [
+          {
+            "node": "Split Files Transcriber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Files Transcriber": {
+      "main": [
+        [
+          {
+            "node": "Delete Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcriber": {
+      "main": [
+        [
+          {
+            "node": "Paragraph breaker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine Transcripts": {
+      "main": [
+        [
+          {
+            "node": "Paragraph breaker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Files": {
+      "main": [
+        [
+          {
+            "node": "Combine Transcripts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Paragraph breaker": {
+      "main": [
+        [
+          {
+            "node": "Summary Creation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summary Creation": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Convert audio link to file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Download audio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Transcriber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download audio": {
+      "main": [
+        [
+          {
+            "node": "Split into 15 minute segments1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split into 15 minute segments1": {
+      "main": [
+        [
+          {
+            "node": "Read Audio Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "2ahNkrEQjFMMaqs9",
+    "timezone": "America/Los_Angeles"
+  },
+  "versionId": "576e6567-804b-4372-9451-1b784ec49969",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "404da7777b9ae3a6ef4a84e36ff3f6ed18ddf4e223c2dd8f9560a48938216fe2"
+  },
+  "id": "qUjYZsS8dpHWq8uJ",
+  "tags": []
+}
