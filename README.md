@@ -1,6 +1,7 @@
 # AssemblyAI Audio to Text Transcription
 
 The AssemblyAI Audio to Text Transcription n8n workflow uses AssemblyAI to transcribe an audio file when given the audio link. There is functionality to split the transcript into paragraphs so that it is easier for the user to read. This is one part of a larger workflow that me and my colleagues are designing, but it is possible to make it function by itself.
+__This workflow works on both the self-hosted and cloud version of n8n.__
 
 
 # WordPress First Automation Workflow
@@ -12,6 +13,6 @@ My workflow also has functionality to split up the audio file into smaller chunk
 
 ## OpenAI Audio to Text Transcription
 
-This is one part of the WordPress First Automation Workflow, separated out to work on more thoroughly. It currently has some sort of problem when trying to split the files, but otherwise it should work.
+This is one part of the WordPress First Automation Workflow, separated out to work on more thoroughly. It currently has some sort of problem when trying to split the files, but otherwise it should work. __This workflow only works on the self-hosted version of n8n.__
 
 The WordPress First Automation Workflow could have functionality to automatically detect when a post is uploaded to WordPress in the near future, along with a way to create social media posts and youtube shorts if I decide to work on this workflow one more.
