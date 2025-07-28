@@ -2,6 +2,8 @@
 
 The AssemblyAI Audio to Text Transcription n8n workflow uses AssemblyAI to transcribe an audio file when given the audio link. There is functionality to split the transcript into paragraphs so that it is easier for the user to read. This is one part of a larger workflow that me and my colleagues are designing, but it is possible to make it function by itself.
 
+This workflow can take inputs of either a WordPress Post or an audio link, both of which eventually ouput as a Google Doc, with the WP Post being updated if the input was a WP Post.
+
 __This workflow works on both the self-hosted and cloud version of n8n.__
 
 
