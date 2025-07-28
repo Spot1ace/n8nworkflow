@@ -25,8 +25,8 @@
       "name": "Convert audio link to file",
       "credentials": {
         "httpBasicAuth": {
-          "id": "jZginzHyXwnlX1lA",
-          "name": "Will Hankins - basic auth WordPress"
+          "id": "and94ZObqAmSRoTQ",
+          "name": "WordPress account 3"
         },
         "wordpressApi": {
           "id": "and94ZObqAmSRoTQ",
@@ -544,7 +544,7 @@
     {
       "parameters": {
         "operation": "sendAndWait",
-        "sendTo": "wrhankins3@gmail.com",
+        "sendTo": "(your email here)",
         "subject": "Transcript Approval",
         "message": "=Here is your sermon transcript. Please make any necessary edits and then click approve. You can change the title if necessary.\n\nhttps://docs.google.com/document/d/{{ $json.documentId }}\n\nAfter approval, a summary will be created and you will be emailed with another prompt to approve.",
         "options": {}
