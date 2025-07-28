@@ -227,8 +227,8 @@
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "ji6eoyvABVDXeld1",
-          "name": "OpenAi 5mt"
+          "id": "oCIZ5iYhUW8PJ1Tj",
+          "name": "OpenAi account 2"
         }
       }
     },
@@ -250,8 +250,8 @@
       "notesInFlow": true,
       "credentials": {
         "httpBasicAuth": {
-          "id": "jZginzHyXwnlX1lA",
-          "name": "Will Hankins - basic auth WordPress"
+          "id": "2jVTrhwHhwkCVFVq",
+          "name": "Unnamed credential"
         }
       },
       "notes": "found from the wordpress post"
